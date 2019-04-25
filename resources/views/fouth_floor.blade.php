@@ -1,4 +1,19 @@
-<!doctype html>
+<?php $client = new GuzzleHttp\Client(['headers' => ['Teamup-Token' => 'b3599f06270e7573e706cd1078f92249368ecd11d3a06d1da242641de81fd6a8']]);
+$sdate = '2018-8-10';
+$edate = '2018-8-10';
+$result = $client->get('https://teamup.com/ksg7y4nwkfp7q6xyio/events?startDate='.$sdate.'&endDate='.$edate);
+date_default_timezone_set("Asia/Bangkok");
+$data = json_decode($result->getBody());
+for($i = 0; $i < sizeof($data->events); $i++){
+
+    $room[$i] = $data->events[$i]->who;
+    preg_match('/\([0-9]+\)/',$room[$i],$match[$i]);
+    $match[$i] = substr($match[$i][0],1,-1);
+    $Stime[$i] = date( 'G' , strtotime($data->events[$i]->start_dt))*60 + date( 'i' , strtotime($data->events[$i]->start_dt));
+    $Etime[$i] = date( 'G' , strtotime($data->events[$i]->end_dt))*60 + date( 'i' , strtotime($data->events[$i]->end_dt));
+}
+?>
+<!-- <!doctype html>
 
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -585,6 +600,13 @@
 
             <!-- Farm -->
             <script>
+
+                // On document ready
+                $( document ).ready(function () {
+                    draw();
+                });
+
+
                 // FARM SCRIPT######################################
                 $("#slider-range").slider({
                     // range: true,
@@ -593,7 +615,6 @@
                     step: 30,
                     values: [540],
                     slide: function(e, ui) {
-
                         var timecon = Math.floor(ui.values[0])
 
                         var hours1 = Math.floor(ui.values[0] / 60);
@@ -647,135 +668,128 @@
                         $('.slider-time2').html(hours2 + ':' + minutes2);
 
 
-
-
-                        // 402
-                        var c = $('#canvas402');
-                        var context = c[0].getContext('2d');
-                        if (ui.values[0] >= 480 && ui.values[0] <= 570) {
-                            context.fillStyle = "#99ff99";
-                            context.fillRect(30, 30, 200, 100);
-                        } else if (ui.value[0] >= 780 && ui.value[0] <= 870) {
-                            context.fillStyle = "#99ff99";
-                            context.fillRect(30, 30, 200, 100);
-                        } else {
-                            context.fillStyle = "#ff0000";
-                            context.fillRect(30, 30, 200, 100);
-                        }
-
-                        // 401 
-                        var c = $('#canvas401');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#FFA500";
-                        context.fillRect(30, 30, 200, 100);
-
-                        // 422 
-                        var c = $('#canvas422');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#800000";
-                        context.fillRect(30, 30, 200, 100);
-
-                        // 415 
-                        var c = $('#canvas415');
-                        var context = c[0].getContext('2d');
-                        if (ui.values[0] >= 480 && ui.values[0] <= 570) {
-                            context.fillStyle = "#99ff99";
-                            context.fillRect(30, 30, 200, 100);
-                        } else if (ui.value[0] >= 780 && ui.value[0] <= 870) {
-                            context.fillStyle = "#99ff99";
-                            context.fillRect(30, 30, 200, 100);
-                        } else {
-                            context.fillStyle = "#ff0000";
-                            context.fillRect(30, 30, 200, 100);
-                        }
-
-                        // LIL 
-                        var c = $('#canvasLIL');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#800080";
-                        context.fillRect(30, 30, 200, 100);
-
-                        // Dent 
-                        var c = $('#canvasDent');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#800080";
-                        context.fillRect(30, 30, 200, 100);
-
-                        // 413
-                        var c = $('#canvas413');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#0000FF";
-                        context.fillRect(30, 30, 200, 100);
-
-                        // 412
-                        var c = $('#canvas412');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#800080";
-                        context.fillRect(30, 30, 200, 100);
-
-
-                        // LAB
-                        var c = $('#canvasLAB');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#800080";
-                        context.fillRect(30, 30, 200, 100);
-
-                        // 411
-                        var c = $('#canvas411');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#0000FF";
-                        context.fillRect(30, 30, 200, 100);
-
-                        // 414
-                        var c = $('#canvas414');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#0000FF";
-                        context.fillRect(30, 30, 200, 100);
-
-                        // 410
-                        var c = $('#canvas410');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#0000FF";
-                        context.fillRect(30, 30, 200, 100);
-
-
-                        // 409
-                        var c = $('#canvas409');
-                        var context = c[0].getContext('2d');
-                        context.fillStyle = "#0000FF";
-                        context.fillRect(30, 30, 200, 100);
-
-
-                        // 403
-                        var c = $('#canvas403');
-                        var context = c[0].getContext('2d');
-                        if (ui.values[0] >= 480 && ui.values[0] <= 570) {
-                            context.fillStyle = "#99ff99";
-                            context.fillRect(30, 30, 200, 100);
-                        } else if (ui.value[0] >= 780 && ui.value[0] <= 870) {
-                            context.fillStyle = "#99ff99";
-                            context.fillRect(30, 30, 200, 100);
-                        } else {
-                            context.fillStyle = "#ff0000";
-                            context.fillRect(30, 30, 200, 100);
-                        }
-
-                        // 404
-                        var c = $('#canvas404');
-                        var context = c[0].getContext('2d');
-                        if (ui.values[0] >= 480 && ui.values[0] <= 570) {
-                            context.fillStyle = "#99ff99";
-                            context.fillRect(30, 30, 200, 100);
-                        } else if (ui.value[0] >= 780 && ui.value[0] <= 870) {
-                            context.fillStyle = "#99ff99";
-                            context.fillRect(30, 30, 200, 100);
-                        } else {
-                            context.fillStyle = "#ff0000";
-                            context.fillRect(30, 30, 200, 100);
-                        }
-
+                        draw(ui);
                     }
                 });
+
+
+                function draw(ui) {
+                    // Fake get ui
+                    if (ui == null) {
+                        var ui = {
+                            values: [$('#slider-range').slider("values")]
+                        };
+                    }
+                    
+                    <?php for ($i = 0; $i < sizeof($match); $i++): ?>
+                        // Check is room  exists
+                        if ($('#canvas<?=$match[$i]?>').length)
+                        {
+                            var c = $('#canvas<?=$match[$i]?>');
+                            var context = c[0].getContext('2d');
+                            if (<?=$Stime[$i]?> <= ui.values[0] && ui.values[0] <= <?=$Etime[$i]?>) {
+                                context.fillStyle = "#ff0000";
+                                context.fillRect(30, 30, 200, 100);
+                            } else {
+                                context.fillStyle = "#99ff99";
+                                context.fillRect(30, 30, 200, 100);
+                            }
+                        }
+
+                    <?php endfor; ?>
+
+                    // 402
+                    var c = $('#canvas402');
+                    var context = c[0].getContext('2d');
+
+                    // 401 
+                    var c = $('#canvas401');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#FFA500";
+                    context.fillRect(30, 30, 200, 100);
+
+                    // 422 
+                    var c = $('#canvas422');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#800000";
+                    context.fillRect(30, 30, 200, 100);
+
+                    // 415 
+                    var c = $('#canvas415');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#0000FF";
+                    context.fillRect(30, 30, 200, 100);
+
+                    // LIL 
+                    var c = $('#canvasLIL');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#800080";
+                    context.fillRect(30, 30, 200, 100);
+
+                    // Dent 
+                    var c = $('#canvasDent');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#800080";
+                    context.fillRect(30, 30, 200, 100);
+
+                    // 413
+                    var c = $('#canvas413');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#0000FF";
+                    context.fillRect(30, 30, 200, 100);
+
+                    // 412
+                    var c = $('#canvas412');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#800080";
+                    context.fillRect(30, 30, 200, 100);
+
+
+                    // LAB
+                    var c = $('#canvasLAB');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#800080";
+                    context.fillRect(30, 30, 200, 100);
+
+                    // 411
+                    var c = $('#canvas411');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#0000FF";
+                    context.fillRect(30, 30, 200, 100);
+
+                    // 414
+                    var c = $('#canvas414');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#0000FF";
+                    context.fillRect(30, 30, 200, 100);
+
+                    // 410
+                    var c = $('#canvas410');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#0000FF";
+                    context.fillRect(30, 30, 200, 100);
+
+
+                    // 409
+                    var c = $('#canvas409');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#0000FF";
+                    context.fillRect(30, 30, 200, 100);
+
+
+                    // 403
+                    var c = $('#canvas403');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#0000FF";
+                    context.fillRect(30, 30, 200, 100);
+
+                    // 404
+                    var c = $('#canvas404');
+                    var context = c[0].getContext('2d');
+                    context.fillStyle = "#0000FF";
+                    context.fillRect(30, 30, 200, 100);
+
+                }
             </script>
 
 
@@ -785,4 +799,4 @@
 
 </body>
 
-</html>
+</html> -->
